@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat with GPT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 flex flex-col items-center p-6 min-h-screen">
+
+  <div class="w-full max-w-2xl bg-white shadow-xl rounded-xl p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center">💬 Chat with GPT</h1>
+
+    <div class="overflow-y-auto h-80 border p-4 rounded-md bg-gray-50 mb-4" id="chatBox">
+      {% if chat_history %}
+        {% for message in chat_history %}
+          <div class="mb-2">
+            <strong class="{{ 'text-blue-600' if message.role == 'user' else 'text-green-600' }}">
+              {{ 'You' if message.role == 'user' else 'GPT' }}:
+            </strong>
+            {{ message.content }}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-gray-400">Start the conversation...</p>
+      {% endif %}
+    </div>
+
+    <form action="/ask" method="post" class="flex gap-2">
+      <input
+        type="text"
+        name="prompt"
+        placeholder="Type your message..."
+        required
+        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <button
+        type="submit"
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+
+</body>
+</html>
